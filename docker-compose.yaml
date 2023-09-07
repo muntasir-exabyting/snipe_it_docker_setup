@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  snipeit:
+    image: snipe/snipe-it:v6.1.2
+    container_name: snipeit
+    environment:
+      - TZ=Etc/UTC
+      - DATABASE_URL=mysql://root:foobar@snipeit_mysql:3306/snipeit
+    volumes:
+      - snipeit_data:/var/lib/snipeit
+    ports:
+      - 80:80
+    env_file:
+      - .snipe_env
+  snipeit_mysql:
+    container_name: snipeit_mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
+    image: mysql:8.1.0
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      - TZ=Etc/UTC
+      - MYSQL_ROOT_PASSWORD=foobar
+      - MYSQL_DATABASE=snipeit
+
+volumes:
+  snipeit_data:
+  mysql_data:
