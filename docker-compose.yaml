@@ -10,7 +10,7 @@ services:
     volumes:
       - snipeit_data:/var/lib/snipeit
     ports:
-      - "80:80"
+      - "${SNIPE_IT_EXTERNAL_PORT}:${SNIPE_IT_INTERNAL_PORT}"
     env_file:
       - .env
   snipeit_mysql:
